@@ -1,3 +1,10 @@
+# About the Work
+The program takes input from the user about courses taken and the number of credits each course carries, with the added functionality of tracking the grade received in the course. The program utilizes pre-determined grade points for various letter grades in its calculation of the GPA, considering the input provided by the user. Additional courses are dynamically added upon the clicking of the "Add More Course" button, and the input fields change accordingly.
+Also, this app refreshes the screen upon pulling and resets all input fields. The calculated GPA will be displayed on the screen once the user clicks the "Calculate" button.
+
+
+
+
 # Welcome to your Expo app 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
