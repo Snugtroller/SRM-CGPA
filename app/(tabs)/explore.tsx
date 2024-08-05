@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Linking,
+} from "react-native";
 import { Divider } from "react-native-elements";
 import { FlatGrid } from "react-native-super-grid";
 
@@ -9,9 +16,20 @@ export default function Explore() {
       name: "RESOURCE LIBRARY",
       code: "#8C92AC",
       image: require("../library.png"),
+      link: "https://docs.google.com/document/d/1cq65mtBK0f0s_Iq4e8JqLvTpPHU3MCiD1puUFatFkgY/edit?usp=drive_link",
     },
-    { name: "FEEDBACK", code: "#8C92AC", image: require("../feedback.png"), },
-    { name: "WORKING...", code: "#8C92AC" },
+    {
+      name: "FEEDBACK",
+      code: "#8C92AC",
+      image: require("../feedback.png"),
+      link: "https://forms.gle/wty1yjQZADWPD7Bp7",
+    },
+    {
+      name: "IDEAS",
+      code: "#8C92AC",
+      image: require("../main-idea.png"),
+      link: "https://forms.gle/MwGz9fiANTAYwgUx5",
+    },
     { name: "WORKING...", code: "#8C92AC" },
     { name: "WORKING...", code: "#8C92AC" },
     { name: "WORKING...", code: "#8C92AC" },
@@ -32,6 +50,7 @@ export default function Explore() {
         renderItem={({ item }) => (
           <TouchableOpacity
             style={[styles.itemContainer, { backgroundColor: item.code }]}
+            onPress={() => Linking.openURL(item.link)}
           >
             <Image source={item.image} style={styles.itemImage} />
             <Text style={styles.itemName}>{item.name}</Text>
