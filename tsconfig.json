@@ -3,10 +3,10 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ]
-    }
+      "@/*": ["./*"]
+    },
+    "esModuleInterop": true, // Enables default imports for CommonJS modules
+    "allowSyntheticDefaultImports": true // Allows synthetic default imports
   },
   "include": [
     "**/*.ts",

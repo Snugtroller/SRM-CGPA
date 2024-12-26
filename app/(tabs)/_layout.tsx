@@ -1,10 +1,10 @@
 import { Tabs } from "expo-router";
 import React from "react";
-import {Image} from "react-native";
+import { Image } from "react-native";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -33,8 +33,9 @@ export default function TabLayout() {
         options={{
           title: "More",
           tabBarIcon: ({ color, focused }) => (
-            <Image source={require("../menu.png")}
-            style={{width:25,height:25,tintColor: color}}
+            <Image
+              source={require("../menu.png")}
+              style={{ width: 25, height: 25, tintColor: color }}
             />
           ),
         }}

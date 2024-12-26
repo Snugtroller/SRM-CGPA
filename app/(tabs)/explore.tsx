@@ -6,9 +6,11 @@ import {
   Image,
   TouchableOpacity,
   Linking,
+  Alert,
 } from "react-native";
 import { Divider } from "react-native-elements";
 import { FlatGrid } from "react-native-super-grid";
+import { router, useRouter } from "expo-router";
 
 export default function Explore() {
   const [items, setItems] = React.useState([
@@ -30,12 +32,29 @@ export default function Explore() {
       image: require("../main-idea.png"),
       link: "https://forms.gle/MwGz9fiANTAYwgUx5",
     },
-    { name: "WORKING...", code: "#8C92AC" },
+    {
+      name: "MAP",
+      code: "#8C92AC",
+      image: require("../map.png"),
+      link: "nothing",
+    },
     { name: "WORKING...", code: "#8C92AC" },
     { name: "WORKING...", code: "#8C92AC" },
     { name: "WORKING...", code: "#8C92AC" },
     { name: "WORKING...", code: "#8C92AC" },
   ]);
+
+  // Handle item press event
+  const handleItemPress = (item) => {
+    if (item.name == "MAP") {
+      router.push("../map/map");
+    }
+    if (item.link) {
+      Linking.openURL(item.link);
+    } else {
+      Alert.alert("No link available", "This feature is not yet available.");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -50,7 +69,7 @@ export default function Explore() {
         renderItem={({ item }) => (
           <TouchableOpacity
             style={[styles.itemContainer, { backgroundColor: item.code }]}
-            onPress={() => Linking.openURL(item.link)}
+            onPress={() => handleItemPress(item)}
           >
             <Image source={item.image} style={styles.itemImage} />
             <Text style={styles.itemName}>{item.name}</Text>
