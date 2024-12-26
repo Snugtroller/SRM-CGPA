@@ -4,6 +4,7 @@ Also, this app refreshes the screen upon pulling and resets all input fields. Th
 
 ![image](https://github.com/user-attachments/assets/bb538dd9-e398-440d-8683-be78914e20d2)
 ![image](https://github.com/user-attachments/assets/dc2d78a7-bab8-4561-92d7-5b745ad129d9)
+![image](https://github.com/user-attachments/assets/87eeecbe-6ede-47bc-9e00-0607662a7786)
 
 
 
