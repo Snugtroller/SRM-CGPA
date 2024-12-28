@@ -93,7 +93,7 @@ export default function HomeScreen() {
     >
       <View style={styles.headerContainer}>
         <Image source={require("../srm.webp")} style={styles.headimg} />
-        <Text style={styles.title}>YASYAREM CGPA CALCULATOR</Text>
+        <Text style={styles.title}>SRM CGPA CALCULATOR</Text>
       </View>
       <Divider style={styles.divider} />
       <View style={styles.tableTitle}>

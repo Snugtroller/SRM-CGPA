@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
-import MapView, { Marker, Region } from "react-native-maps";
+import MapView, { Marker, Region, Polyline } from "react-native-maps";
 import * as Location from "expo-location";
 import {
   StyleSheet,
@@ -14,7 +14,14 @@ import Back from "../back.png";
 
 export default function MapScreen() {
   const navigation = useNavigation();
-  const mapRef = useRef(null); // Create a ref for the MapView
+  const mapRef = useRef(null);
+  const [marker, setMarker] = useState(null);
+  const [userLocation, setUserLocation] = useState(null);
+
+  const handlePress = (event) => {
+    const { latitude, longitude } = event.nativeEvent.coordinate;
+    setMarker({ latitude, longitude });
+  };
 
   const [mapRegion, setMapRegion] = useState({
     latitude: 12.8229,
@@ -35,16 +42,27 @@ export default function MapScreen() {
         return;
       }
       setLocationPermission(true);
+      const location = await Location.getCurrentPositionAsync({});
+      setUserLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
     })();
   }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity onPress={focusMap}>
-          <View style={{ padding: 10 }}>
-            <Text style={{ color: "#fff" }}>Focus</Text>
-          </View>
+        <TouchableOpacity
+          onPress={() => {
+            console.log("Focus button pressed");
+            focusMap();
+          }}
+          style={{
+            padding: 10,
+          }}
+        >
+          <Text style={{ color: "white" }}>Focus</Text>
         </TouchableOpacity>
       ),
       headerTitle: "Map View",
@@ -54,7 +72,14 @@ export default function MapScreen() {
       headerTintColor: "#fff",
       headerLeft: () => (
         <TouchableOpacity
-          onPress={() => navigation.goBack()}
+          onPress={() => {
+            console.log("Back button pressed");
+            try {
+              navigation.goBack();
+            } catch (err) {
+              console.error("Navigation error:", err);
+            }
+          }}
           style={styles.backButtonContainer}
         >
           <Image source={Back} style={styles.backButtonIcon} />
@@ -64,13 +89,18 @@ export default function MapScreen() {
   }, [navigation]);
 
   const focusMap = () => {
+    if (!mapRef.current) {
+      console.error("Map reference is not initialized");
+      return;
+    }
+
     const SRMKTR = {
       latitude: 12.8229,
       longitude: 80.044,
       latitudeDelta: 0.0022,
       longitudeDelta: 0.0071,
     };
-    mapRef.current?.animateToRegion(SRMKTR, 1000); // Smooth animation to the region
+    mapRef.current?.animateToRegion(SRMKTR, 1000);
   };
   const onMarkerSelected = (marker: any) => {
     Alert.alert(marker.name);
@@ -88,15 +118,31 @@ export default function MapScreen() {
     <View style={styles.container}>
       {locationPermission ? (
         <MapView
-          ref={mapRef} // Attach the ref to the MapView
+          ref={mapRef}
           style={styles.map}
           region={mapRegion}
           showsUserLocation={true}
           showsCompass={true}
           showsBuildings={true}
           showsMyLocationButton={true}
+          onPress={handlePress}
           onRegionChangeComplete={(region) => setMapRegion(region)}
-        />
+        >
+          {marker && (
+            <>
+              <Marker
+                coordinate={marker}
+                title="Selected Location"
+                description="This is your chosen spot"
+              />
+              <Polyline
+                coordinates={[userLocation, marker]}
+                strokeColor="yellow"
+                strokeWidth={3}
+              />
+            </>
+          )}
+        </MapView>
       ) : (
         <View style={styles.permissionDenied}>
           <Text style={{ color: "#fff" }}>Location permission denied.</Text>
